@@ -18,6 +18,7 @@ function wc_conai_settings_init() {
         'wc_conai_section_developers',
         [
             'label_for' => 'wc_conai_json',
+            // 'class' => 'wc_conai_row hidden'
             'class' => 'wc_conai_row'
         ]
     );
@@ -36,24 +37,18 @@ function wc_conai_json_cb( $args ) {
 
         <textarea id="<?php echo esc_attr( $args['label_for'] ); ?>" data-custom="<?php echo esc_attr( $args['wc_conai_custom_data'] ); ?>" name="wc_conai_options[<?php echo esc_attr( $args['label_for'] ); ?>]" rows="4" cols="50"><?php echo isset( $options[ $args['label_for'] ] ) ? $options[ $args['label_for'] ] : ''; ?></textarea>
 
-        <p class="description">
-            <?php esc_html_e( 'I valori attualmente impoostati sono presi da https://www.cial.it/wp-content/uploads/2016/01/Guida_Contributo_CONAI_2020_Vol1.pdf', 'wc_conai' ); ?>
-        </p>
+        <pre class="description">
+            <?php // esc_html_e( 'I valori attualmente impoostati sono presi da https://www.cial.it/wp-content/uploads/2016/01/Guida_Contributo_CONAI_2020_Vol1.pdf', 'wc_conai' ); ?>
+        </pre>
     <?php
 }
 
-/**
- * This function takes a capability which will be used to determine whether or not a page is included in the menu.
- * 
- * add_menu_page( string $page_title, string $menu_title, string $capability, string $menu_slug, callable $function = '', string $icon_url = '', int $position = null )
- * https://developer.wordpress.org/reference/functions/add_menu_page/
- */
 function wc_conai_options_page() {
-    // add top level menu page
-    add_menu_page(
-        'WooCommerce Conai - Contributo Consorzio Nazionale Imballaggi',
+    add_submenu_page(
+        'options-general.php',
+        'WooCommerce Contributo Conai',
         'WooCommerce Conai',
-        'manage_woocommerce', // shop managers - https://docs.woocommerce.com/document/roles-capabilities/ 
+        'manage_woocommerce',
         'wc_conai',
         'wc_conai_options_page_html'
     );
@@ -71,7 +66,6 @@ function wc_conai_options_page_html() {
         $wc_conai_json = json_decode($options['wc_conai_json']);
 
         if($wc_conai_json === null) {
-            // add_settings_error( string $setting, string $code, string $message, string $type = 'error' )
             add_settings_error( 'wc_conai_messages', 'wc_conai_message', __( 'Json errato', 'wc_conai' ), 'error' );
         } else {
             add_settings_error( 'wc_conai_messages', 'wc_conai_message', __( 'Settings Saved', 'wc_conai' ), 'updated' );
