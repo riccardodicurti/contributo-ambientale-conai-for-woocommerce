@@ -1,8 +1,159 @@
 <?php
- 
+
+// var_dump( // get_field( 'wc_conai_list' ) );
+
+if( function_exists('acf_add_options_page') ) {
+
+    acf_add_options_page(array(
+        'page_title' => 'WooCommerce Contributo Conai',
+        'menu_title' => 'WooCommerce Conai',
+        'menu_slug' => 'wc_conai_settings',
+        'capability' => 'manage_woocommerce',
+        'redirect' => false
+    ));
+
+    acf_add_local_field_group(array(
+        'key' => 'group_6228e877999a1',
+        'title' => 'Pagina Opzioni',
+        'fields' => array(
+            array(
+                'key' => 'field_6228e9fcfdd66',
+                'label' => 'Entry conai',
+                'name' => 'wc_conai_list',
+                'type' => 'repeater',
+                'instructions' => 'Inserire l\'elenco delle entry conai',
+                'required' => 1,
+                'conditional_logic' => 0,
+                'wrapper' => array(
+                    'width' => '',
+                    'class' => '',
+                    'id' => '',
+                ),
+                'collapsed' => '',
+                'min' => 0,
+                'max' => 0,
+                'layout' => 'block',
+                'button_label' => 'Aggiungi nuova entry',
+                'sub_fields' => array(
+                    array(
+                        'key' => 'field_6228ea3cfdd67',
+                        'label' => 'id',
+                        'name' => 'id',
+                        'type' => 'number',
+                        'instructions' => 'Inserire un identificativo diverso per ogni entry',
+                        'required' => 1,
+                        'conditional_logic' => 0,
+                        'wrapper' => array(
+                            'width' => '',
+                            'class' => '',
+                            'id' => '',
+                        ),
+                        'default_value' => '',
+                        'placeholder' => '',
+                        'prepend' => '',
+                        'append' => '',
+                        'min' => 1,
+                        'max' => '',
+                        'step' => 1,
+                    ),
+                    array(
+                        'key' => 'field_6228ea93fdd68',
+                        'label' => 'nome',
+                        'name' => 'nome',
+                        'type' => 'text',
+                        'instructions' => 'Inserire il nome della entry',
+                        'required' => 1,
+                        'conditional_logic' => 0,
+                        'wrapper' => array(
+                            'width' => '',
+                            'class' => '',
+                            'id' => '',
+                        ),
+                        'default_value' => '',
+                        'placeholder' => '',
+                        'prepend' => '',
+                        'append' => '',
+                        'maxlength' => '',
+                    ),
+                    array(
+                        'key' => 'field_6228ead3fdd69',
+                        'label' => 'prezzo',
+                        'name' => 'prezzo',
+                        'type' => 'number',
+                        'instructions' => 'Inserire il prezzo della entry',
+                        'required' => 1,
+                        'conditional_logic' => 0,
+                        'wrapper' => array(
+                            'width' => '',
+                            'class' => '',
+                            'id' => '',
+                        ),
+                        'default_value' => '',
+                        'placeholder' => '',
+                        'prepend' => '',
+                        'append' => '',
+                        'min' => 1,
+                        'max' => '',
+                        'step' => '',
+                    ),
+                    array(
+                        'key' => 'field_6228eaf6fdd6a',
+                        'label' => 'unità di misura',
+                        'name' => 'unita_di_misura',
+                        'type' => 'text',
+                        'instructions' => 'Inserire l\'unità di misura della entry',
+                        'required' => 1,
+                        'conditional_logic' => 0,
+                        'wrapper' => array(
+                            'width' => '',
+                            'class' => '',
+                            'id' => '',
+                        ),
+                        'default_value' => '€ per 1000kg',
+                        'placeholder' => '',
+                        'prepend' => '',
+                        'append' => '',
+                        'maxlength' => '',
+                    ),
+                ),
+            ),
+        ),
+        'location' => array(
+            array(
+                array(
+                    'param' => 'options_page',
+                    'operator' => '==',
+                    'value' => 'wc_conai_settings',
+                ),
+            ),
+        ),
+        'menu_order' => 0,
+        'position' => 'normal',
+        'style' => 'default',
+        'label_placement' => 'top',
+        'instruction_placement' => 'label',
+        'hide_on_screen' => '',
+        'active' => true,
+        'description' => '',
+        'show_in_rest' => 0,
+    ));
+
+}
+
+function wc_conai_options_page() {
+    add_menu_page(
+        'WooCommerce Contributo Conai',
+        'WooCommerce Conai',
+        'manage_woocommerce',
+        'wc_conai',
+        'wc_conai_options_page_html'
+    );
+}
+// add_action( 'admin_menu', 'wc_conai_options_page' );
+
 function wc_conai_settings_init() {
     register_setting( 'wc_conai', 'wc_conai_options' );
- 
+
     add_settings_section(
         'wc_conai_section_developers',
         __( 'Impostazioni per la gestione del conai.', 'wc_conai' ),
@@ -23,7 +174,7 @@ function wc_conai_settings_init() {
         ]
     );
 }
-add_action( 'admin_init', 'wc_conai_settings_init' );
+// add_action( 'admin_init', 'wc_conai_settings_init' );
  
 function wc_conai_section_developers_cb( $args ) {
     ?>
@@ -42,18 +193,6 @@ function wc_conai_json_cb( $args ) {
         </pre>
     <?php
 }
-
-function wc_conai_options_page() {
-    add_submenu_page(
-        'options-general.php',
-        'WooCommerce Contributo Conai',
-        'WooCommerce Conai',
-        'manage_woocommerce',
-        'wc_conai',
-        'wc_conai_options_page_html'
-    );
-}
-add_action( 'admin_menu', 'wc_conai_options_page' );
  
 function wc_conai_options_page_html() {
     if ( ! current_user_can( 'manage_woocommerce' ) ) {

@@ -4,7 +4,7 @@
  * Plugin Name:       WooCommerce Contributo Ambientale Conai
  * Plugin URI:        https://github.com/riccardodicurti/wc_conai
  * Description:       Plugin in fase di sviluppo per l'aggiunta del calcolo relativo al contributo conai in fase di checkout. 
- * Version:           220309
+ * Version:           10032022
  * Author:            Riccardo Di Curti
  * Author URI:        https://riccardodicurti.it/
  * License:           GPL v2 or later
@@ -13,7 +13,7 @@
  * Domain Path:       /languages
  */
 
-if ( is_plugin_active( 'woocommerce/woocommerce.php' ) ) {
+if ( is_plugin_active( 'woocommerce/woocommerce.php' ) && is_plugin_active( 'advanced-custom-fields-pro/acf.php' ) ) {
 
     if ( is_admin() ) {
         require __DIR__ . '/includes/settings.php';
@@ -23,18 +23,25 @@ if ( is_plugin_active( 'woocommerce/woocommerce.php' ) ) {
     add_action( 'woocommerce_process_product_meta', 'woocommerce_product_custom_fields_save' );
     add_filter( 'woocommerce_available_variation', 'custom_load_variation_settings_products_fields' );
     add_action( 'woocommerce_cart_calculate_fees','wc_conai_weight_add_cart_fee' );
-} 
+} else {
+    add_action( 'admin_notices', 'wc_conai_admin_error_notice' );
+}
+
+function wc_conai_admin_error_notice() {
+    echo '<div class="notice error my-acf-notice is-dismissible" ><p>' .  __( 'Il plugin WooCommerce "Contributo Ambientale Conai" per funzionare ha bisogno di WooCommerce e ACF Pro attivi', 'wc_conai' ) . '</p></div>';
+
+}
 
 function wc_conai_product_custom_fields() {
-    $options = get_option( 'wc_conai_options' );
-    $wc_conai_json = json_decode($options['wc_conai_json'], true);
+    $options = get_field( 'wc_conai_list', 'option' );
 
     $woocommerce_wp_select_options = array( 
         '0' => __('Non soggetto a Conai', 'wc_conai' )
     ); 
 
-    foreach( $wc_conai_json as $wc_conai_json_option ) {
-        $woocommerce_wp_select_options[ $wc_conai_json_option['id'] ] = __('Contributo conai ', 'wc_conai') . $wc_conai_json_option['name'] . ' ' .  $wc_conai_json_option['price']  . '' . $wc_conai_json_option['unit'];
+    foreach( $options as $option ) {
+
+        $woocommerce_wp_select_options[ $option['id'] ] = __('Contributo conai ', 'wc_conai') . $option['nome'] . ' ' .  $option['prezzo']  . '' . $option['unita_di_misura'];
     }
     
     echo '<div class="product_custom_field">';
@@ -69,13 +76,12 @@ function wc_conai_weight_add_cart_fee() {
         return;
     }
 
-    $options = get_option( 'wc_conai_options' );
-    $wc_conai_json = json_decode($options['wc_conai_json'], true);
+    $options = get_field( 'wc_conai_list', 'option' );
 
-    $conai_counter_array = array(); 
+    $conai_counter_array = array();
 
-    foreach( $wc_conai_json as $wc_conai_json_option ) {
-        $conai_counter_array[$wc_conai_json_option['id']] = array( __('Contributo conai ', 'wc_conai') . $wc_conai_json_option['name'] . ' ' .  $wc_conai_json_option['price']  . '' . $wc_conai_json_option['unit'], $wc_conai_json_option['price'], 0);
+    foreach( $options as $option ) {
+        $conai_counter_array[$option['id']] = array( __('Contributo conai ', 'wc_conai') . $option['nome'] . ' ' .  $option['prezzo']  . '' . $option['unita_di_misura'], $option['prezzo'], 0);
     }
       
     foreach( WC()->cart->get_cart() as $cart_item ){

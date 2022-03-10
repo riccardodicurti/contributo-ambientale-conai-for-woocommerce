@@ -3,24 +3,15 @@ Contributors: riccardodicurti
 Author URI: https://riccardodicurti.it/
 Plugin URL: https://github.com/riccardodicurti/wc_conai
 
-Plugin in fase di sviluppo per l'aggiunta del calcolo relativo al contributo conai in fase di checkout.
+Plugin in fase di sviluppo per l'aggiunta del calcolo relativo al contributo conai in fase di checkout. Necessita di ACF PRO e WooCommerce per funzionare. 
 
 ## Description 
 
 Il plugin WooCommerce Contributo Ambientale Conai - Consorzio Nazionale Imballaggi è la risposta all'esigenza di aggiungere il calcolo del CAC al tuo e-commerce. 
 
-Il plugin sarà visibile unicamente se è attivo WooCommerce e richiederà l'inserimento di un json di configurazione come quello qui di seguito: 
+Il plugin sarà visibile unicamente se è attivo ACF PRO e WooCommerce. 
 
-`
-[
-    { "id":1, "name":"carta", "price":55, "unit":"€ per 1000kg" },
-    { "id":2, "name":"plastica A", "price":150, "unit":"€ per 1000kg" },
-    { "id":3, "name":"plastica B1", "price":208, "unit":"€ per 1000kg" },
-    { "id":4, "name":"plastica B2", "price":436, "unit":"€ per 1000kg" },
-    { "id":5, "name":"plastica C", "price":546, "unit":"€ per 1000kg" },
-    { "id":6, "name":"acciaio", "price":3, "unit":"€ per 1000kg" }
-]
-`
+Richiederà l'inserimento dei settings nel pannello del plugin.
 
 Fai attenzione a non usare id 0 in qunato di def. per gli articoli non soggetti a conai. 
 
@@ -37,6 +28,9 @@ Il plugin sarà presto revisionato e raggiunta una versione stabile verrà rilas
 Ti consiglio di leggere la pagina presente sul sito ufficiale del conai al riguardo del [CONTRIBUTO AMBIENTALE](http://www.conai.org/imprese/contributo-ambientale/).
 
 ## Changelog 
+
+**10032022**
+- new settings page
 
 **09032022**
 - fixed error in saving the conai option
