@@ -1,13 +1,18 @@
-#WooCommerce Contributo Ambientale Conai
+=== Contributo Ambientale Conai for WooCommerce ===
 Contributors: riccardodicurti
-Author URI: https://riccardodicurti.it/
-Plugin URL: https://github.com/riccardodicurti/wc_conai
-
-Plugin in fase di sviluppo per l'aggiunta del calcolo relativo al contributo conai in fase di checkout. Necessita di ACF PRO e WooCommerce per funzionare. 
+Donate link: https://riccardodicurti.it/
+Tags: conai, woocommerce
+Requires at least: 4.7
+Tested up to: 5.4
+Stable tag: 1.1.0
+Requires PHP: 7.0
+License: GPLv2 or later
+License URI: https://www.gnu.org/licenses/gpl-2.0.html
+Plugin in fase di sviluppo per l'aggiunta del calcolo relativo al contributo conai in fase di checkout.
 
 ## Description 
 
-Il plugin WooCommerce Contributo Ambientale Conai - Consorzio Nazionale Imballaggi è la risposta all'esigenza di aggiungere il calcolo del CAC al tuo e-commerce. 
+Il plugin Contributo Ambientale Conai for WooCommerce - Consorzio Nazionale Imballaggi è la risposta all'esigenza di aggiungere il calcolo del CAC al tuo e-commerce. 
 
 Il plugin sarà visibile unicamente se è attivo ACF PRO e WooCommerce. 
 
@@ -27,7 +32,15 @@ Il plugin sarà presto revisionato e raggiunta una versione stabile verrà rilas
 
 Ti consiglio di leggere la pagina presente sul sito ufficiale del conai al riguardo del [CONTRIBUTO AMBIENTALE](http://www.conai.org/imprese/contributo-ambientale/).
 
+## License
+
+This plugin is released under the terms of the GNU General Public License version 2 or (at your option) any later version. See [LICENSE](https://www.gnu.org/licenses/gpl-2.0.html) for complete license.
+
 ## Changelog 
+
+**26062024**
+- cleanup
+- bugfixing
 
 **10032022**
 - new settings page
