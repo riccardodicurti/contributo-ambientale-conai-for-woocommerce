@@ -38,6 +38,9 @@ This plugin is released under the terms of the GNU General Public License versio
 
 ## Changelog 
 
+**1.1.1**
+- fix compatibility problem with ACF
+
 **26062024**
 - cleanup
 - bugfixing
