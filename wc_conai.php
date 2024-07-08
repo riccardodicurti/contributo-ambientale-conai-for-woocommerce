@@ -5,7 +5,7 @@
  * Plugin URI:        https://github.com/riccardodicurti/wc_conai
  * GitHub Plugin URI: riccardodicurti/wc_conai
  * Description:       Calcolo del contributo conai in fase di checkout.
- * Version:           1.1.0
+ * Version:           1.1.1
  * Author:            Riccardo Di Curti
  * Author URI:        https://riccardodicurti.it/
  * License: 		  GPLv2 or later
@@ -73,12 +73,31 @@ function custom_load_variation_settings_products_fields( $variations ) {
 	return $variations;
 }
 
+function wc_conai_wc_conai_list_repeater_field() {
+	$output = [];
+	$repeater_value = get_option( 'options_wc_conai_list' );
+
+	if ( $repeater_value ) {
+		for ($i=0; $i<$repeater_value; $i++) {
+			$output[] = [
+				'id' => get_option("options_wc_conai_list_{$i}_id"),
+				'nome' => get_option("options_wc_conai_list_{$i}_nome"),
+				'prezzo' => get_option("options_wc_conai_list_{$i}_prezzo"),
+				'unita_di_misura' => get_option("options_wc_conai_list_{$i}_unita_di_misura")
+			];
+		} 
+	}
+
+	return $output;
+}
+
 function wc_conai_weight_add_cart_fee() {
 	if ( is_admin() && ! defined( 'DOING_AJAX' ) ) {
 		return;
 	}
 
-	$options = get_field( 'wc_conai_list', 'option' );
+	$options = wc_conai_wc_conai_list_repeater_field() ?: [];
+	$all_conai_id = array_column( $options, 'id' );
 
 	$conai_counter_array = [];
 
@@ -100,7 +119,7 @@ function wc_conai_weight_add_cart_fee() {
 		$product_conai_class = get_post_meta( $parent_id, 'wc_conai', true );
 		$product_weight      = $cart_item['data']->get_weight();
 
-		if ( $product_conai_class && $product_weight ) {
+		if ( $product_conai_class && in_array( $product_conai_class, $all_conai_id ) && $product_weight ) {
 			$conai_counter_array[ $product_conai_class ][2] += $product_weight * ( $conai_counter_array[ $product_conai_class ][1] / 1000 ) * $cart_item['quantity'];
 		}
 	}
