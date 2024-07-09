@@ -5,7 +5,7 @@
  * Plugin URI:        https://github.com/riccardodicurti/wc_conai
  * GitHub Plugin URI: riccardodicurti/wc_conai
  * Description:       Calcolo del contributo conai
- * Version:           1.1.1
+ * Version:           1.1.2
  * Author:            Riccardo Di Curti
  * Author URI:        https://riccardodicurti.it/
  * License: 		  GPLv2 or later
@@ -49,7 +49,7 @@ function wc_conai_product_custom_fields() {
 	woocommerce_wp_select(
 		[
 			'id'      => 'wc_conai',
-			'label'   => __( 'Conai', 'woocommerce' ),
+			'label'   => __( 'Conai', 'wc_conai' ),
 			'class'   => 'select long',
 			'options' => $woocommerce_wp_select_options,
 		]
@@ -97,8 +97,17 @@ function wc_conai_weight_add_cart_fee() {
 	}
 
 	$options = wc_conai_wc_conai_list_repeater_field() ?: [];
+	$tax_class = get_field( 'aliquota_di_imposta', 'options' ) ?: '';
+
 	$all_conai_id = array_column( $options, 'id' );
 
+	$tax_classes = WC_Tax::get_tax_classes(); 
+
+    if (! in_array( '', $tax_classes ) ) { 
+        array_unshift( $tax_classes,  __( 'Standard rate', 'wc_conai' ) );
+    } 
+
+	$tax_class = $tax_classes[ $tax_class ] ?? '';
 	$conai_counter_array = [];
 
 	foreach ( $options as $option ) {
@@ -126,8 +135,8 @@ function wc_conai_weight_add_cart_fee() {
 
 	foreach ( $conai_counter_array as $conai_item ) {
 		if ( $conai_item[2] ) {
-			$conai_item[2] = floor( $conai_item[2] * 100 * 1.22 ) / 100;
-			WC()->cart->add_fee( $conai_item[0], $conai_item[2], false );
+			$conai_item[2] = floor( $conai_item[2] * 100 ) / 100;
+			WC()->cart->add_fee( $conai_item[0], $conai_item[2], true, $tax_class );
 		}
 	}
 }

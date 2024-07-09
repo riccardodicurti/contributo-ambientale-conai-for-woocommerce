@@ -2,6 +2,13 @@
 
 if( function_exists('acf_add_options_page') ) {
 
+    $tax_classes = WC_Tax::get_tax_classes(); 
+
+    if (! in_array( '', $tax_classes ) ) { 
+        array_unshift( $tax_classes,  __( 'Standard rate', 'wc_conai' ) );
+    } 
+
+
     acf_add_options_sub_page( [
         'page_title' => 'WooCommerce Contributo Ambientale Conai',
         'menu_title' => 'Conai Settings',
@@ -11,8 +18,31 @@ if( function_exists('acf_add_options_page') ) {
 
     acf_add_local_field_group(array(
         'key' => 'group_6228e877999a1',
-        'title' => 'Pagina Opzioni',
+        'title' => 'Settings',
         'fields' => array(
+            array(
+                'key' => 'field_668d3280ee166',
+                'label' => 'Aliquota di imposta',
+                'name' => 'aliquota_di_imposta',
+                'aria-label' => '',
+                'type' => 'select',
+                'instructions' => '',
+                'required' => 0,
+                'conditional_logic' => 0,
+                'wrapper' => array(
+                    'width' => '',
+                    'class' => '',
+                    'id' => '',
+                ),
+                'choices' => $tax_classes,
+                'default_value' => 0,
+                'return_format' => 'value',
+                'multiple' => 0,
+                'allow_null' => 0,
+                'ui' => 0,
+                'ajax' => 0,
+                'placeholder' => '',
+            ),
             array(
                 'key' => 'field_6228e9fcfdd66',
                 'label' => 'Entry conai',
