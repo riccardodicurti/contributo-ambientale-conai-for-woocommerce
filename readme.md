@@ -17,9 +17,9 @@ TARIFFA CONAI ALLA TONNELLATA / 1000 * PESO DEL PRODOTTO IN KG * NUMERO DI PRODO
 
 Il plugin sarà presto revisionato e raggiunta una versione stabile verrà rilasciato per il download dalla repository ufficiale di WordPress. Nel caso in cui troviate bugs o vogliate collaborare non esitate a contattarmi.  
 
-## Frequently Asked Questions 
+## Domande frequenti
 
-### Dove posso trovare maggiorni informazioni sul contributo ambientale conai ?
+### Dove posso trovare maggiori informazioni sul contributo ambientale conai ?
 
 Ti consiglio di leggere la pagina presente sul sito ufficiale del conai al riguardo del [CONTRIBUTO AMBIENTALE](http://www.conai.org/imprese/contributo-ambientale/).
 

@@ -4,10 +4,10 @@
  * Plugin Name:       Contributo Ambientale Conai for WooCommerce
  * Plugin URI:        https://github.com/riccardodicurti/wc_conai
  * GitHub Plugin URI: riccardodicurti/wc_conai
- * Description:       Calcolo del contributo conai
+ * Description:       Calcolo del contributo ambientale conai per WooCommerce
  * Version:           1.1.2
  * Author:            Riccardo Di Curti
- * Author URI:        https://riccardodicurti.it/
+ * Author URI:        https://riccardodicurti.it/wc_conai
  * License: 		  GPLv2 or later
  * License URI: 	  https://www.gnu.org/licenses/gpl-2.0.html
  * Text Domain:       wc_conai
@@ -30,7 +30,7 @@ add_action( 'init', function() {
 } );
 
 function wc_conai_admin_error_notice() {
-	echo esc_html( '<div class="notice error my-acf-notice is-dismissible" ><p>' . __( 'Il plugin WooCommerce "Contributo Ambientale Conai" per funzionare ha bisogno di WooCommerce e ACF Pro attivi', 'wc_conai' ) . '</p></div>' );
+	echo esc_html( '<div class="notice error my-acf-notice is-dismissible" ><p>' . __( 'Il plugin "Contributo Ambientale Conai for WooCommerce" per funzionare ha bisogno di WooCommerce e ACF Pro attivi', 'wc_conai' ) . '</p></div>' );
 }
 
 function wc_conai_product_custom_fields() {
@@ -91,6 +91,16 @@ function wc_conai_wc_conai_list_repeater_field() {
 	return $output;
 }
 
+function wc_conai_get_all_wc_tax_classes() {
+	$tax_classes = WC_Tax::get_tax_classes(); 
+
+    if (! in_array( '', $tax_classes ) ) { 
+        array_unshift( $tax_classes,  __( 'Standard rate', 'wc_conai' ) );
+    }
+
+	return $tax_classes;
+}
+
 function wc_conai_weight_add_cart_fee() {
 	if ( is_admin() && ! defined( 'DOING_AJAX' ) ) {
 		return;
@@ -98,14 +108,8 @@ function wc_conai_weight_add_cart_fee() {
 
 	$options = wc_conai_wc_conai_list_repeater_field() ?: [];
 	$tax_class = get_field( 'aliquota_di_imposta', 'options' ) ?: '';
-
 	$all_conai_id = array_column( $options, 'id' );
-
-	$tax_classes = WC_Tax::get_tax_classes(); 
-
-    if (! in_array( '', $tax_classes ) ) { 
-        array_unshift( $tax_classes,  __( 'Standard rate', 'wc_conai' ) );
-    } 
+	$tax_classes = wc_conai_get_all_wc_tax_classes();
 
 	$tax_class = $tax_classes[ $tax_class ] ?? '';
 	$conai_counter_array = [];

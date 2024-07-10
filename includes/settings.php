@@ -2,12 +2,7 @@
 
 if( function_exists('acf_add_options_page') ) {
 
-    $tax_classes = WC_Tax::get_tax_classes(); 
-
-    if (! in_array( '', $tax_classes ) ) { 
-        array_unshift( $tax_classes,  __( 'Standard rate', 'wc_conai' ) );
-    } 
-
+    $tax_classes = wc_conai_get_all_wc_tax_classes();
 
     acf_add_options_sub_page( [
         'page_title' => 'WooCommerce Contributo Ambientale Conai',

@@ -3,7 +3,7 @@ Contributors: riccardodicurti
 Donate link: https://riccardodicurti.it/
 Tags: conai, woocommerce
 Requires at least: 6.5
-Tested up to: 6.5
+Tested up to: 6.5.5
 Stable tag: 1.1.2
 Requires PHP: 8.1.23
 License: GPLv2 or later
