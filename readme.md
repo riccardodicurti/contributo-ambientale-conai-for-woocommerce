@@ -10,6 +10,9 @@ License: GPLv2 or later
 License URI: https://www.gnu.org/licenses/gpl-2.0.html
 Plugin in fase di sviluppo per l'aggiunta del calcolo relativo al contributo conai in fase di checkout.
 
+
+![liberapay](https://img.shields.io/liberapay/patrons/riccardodicurti.svg?logo=liberapay)
+
 ## Descrizione 
 
 Il plugin Contributo Ambientale Conai for WooCommerce - Consorzio Nazionale Imballaggi è la risposta all'esigenza di aggiungere il calcolo del Conai al tuo WooCommerce. 
@@ -30,6 +33,10 @@ Il plugin sarà presto revisionato e raggiunta una versione stabile verrà rilas
 ### Dove posso trovare maggiorni informazioni sul contributo ambientale conai ?
 
 Ti consiglio di leggere la pagina presente sul sito ufficiale del conai al riguardo del [CONTRIBUTO AMBIENTALE](http://www.conai.org/imprese/contributo-ambientale/).
+
+## Sostieni il progetto 
+
+Se vuoi sostenere il progetto puoi fare una donazione su [liberapay](https://liberapay.com/riccardodicurti/donate)
 
 ## License
 
