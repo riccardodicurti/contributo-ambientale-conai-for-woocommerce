@@ -33,6 +33,10 @@ This plugin is released under the terms of the GNU General Public License versio
 
 ## Changelog 
 
+**1.1.3**
+- cleanup
+- bug fixing
+
 **1.1.2**
 - add compatibility with WooCommerce Tax
 
@@ -41,7 +45,7 @@ This plugin is released under the terms of the GNU General Public License versio
 
 **26062024**
 - cleanup
-- bugfixing
+- bug fixing
 
 **10032022**
 - new settings page

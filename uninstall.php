@@ -6,7 +6,7 @@ if (!defined('WP_UNINSTALL_PLUGIN')) {
 }
  
 // only for old plugin versions
-$option_name = 'wc_conai_options';
+$option_name = 'options_conai_fw_list';
  
 delete_option($option_name);
 // for site options in Multisite

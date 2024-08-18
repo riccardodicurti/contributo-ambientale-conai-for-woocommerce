@@ -1,13 +1,15 @@
 <?php
 
+if ( ! defined( 'ABSPATH' ) ) exit; // Exit if accessed directly
+
 if( function_exists('acf_add_options_page') ) {
 
-    $tax_classes = wc_conai_get_all_wc_tax_classes();
+    $tax_classes = conai_fw_get_all_wc_tax_classes();
 
     acf_add_options_sub_page( [
         'page_title' => 'WooCommerce Contributo Ambientale Conai',
         'menu_title' => 'Conai Settings',
-        'menu_slug' => 'wc_conai_settings',
+        'menu_slug' => 'conai_fw_settings',
         'parent_slug' => 'woocommerce',
     ]);
 
@@ -41,7 +43,7 @@ if( function_exists('acf_add_options_page') ) {
             array(
                 'key' => 'field_6228e9fcfdd66',
                 'label' => 'Entry conai',
-                'name' => 'wc_conai_list',
+                'name' => 'conai_fw_list',
                 'type' => 'repeater',
                 'instructions' => 'Inserire l\'elenco delle entry conai',
                 'required' => 1,
@@ -145,7 +147,7 @@ if( function_exists('acf_add_options_page') ) {
                 array(
                     'param' => 'options_page',
                     'operator' => '==',
-                    'value' => 'wc_conai_settings',
+                    'value' => 'conai_fw_settings',
                 ),
             ),
         ),

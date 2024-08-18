@@ -2,17 +2,19 @@
 
 /**
  * Plugin Name:       Contributo Ambientale Conai for WooCommerce
- * Plugin URI:        https://github.com/riccardodicurti/wc_conai
+ * Plugin URI:        https://riccardodicurti.it/wc_conai
  * GitHub Plugin URI: riccardodicurti/wc_conai
  * Description:       Calcolo del contributo ambientale conai per WooCommerce
- * Version:           1.1.2
+ * Version:           1.1.3
  * Author:            Riccardo Di Curti
  * Author URI:        https://riccardodicurti.it/wc_conai
  * License: 		  GPLv2 or later
  * License URI: 	  https://www.gnu.org/licenses/gpl-2.0.html
- * Text Domain:       wc_conai
+ * Text Domain:       contributo-ambientale-conai-for-woocommerce
  * Domain Path:       /languages
  */
+
+ if ( ! defined( 'ABSPATH' ) ) exit; // Exit if accessed directly
 
 add_action( 'init', function() {
 	if ( is_plugin_active( 'woocommerce/woocommerce.php' ) && is_plugin_active( 'advanced-custom-fields-pro/acf.php' ) ) {
@@ -20,28 +22,28 @@ add_action( 'init', function() {
 			require __DIR__ . '/includes/settings.php';
 		}
 	
-		add_action( 'woocommerce_product_options_general_product_data', 'wc_conai_product_custom_fields' );
-		add_action( 'woocommerce_process_product_meta', 'woocommerce_product_custom_fields_save' );
-		add_filter( 'woocommerce_available_variation', 'custom_load_variation_settings_products_fields' );
-		add_action( 'woocommerce_cart_calculate_fees', 'wc_conai_weight_add_cart_fee' );
+		add_action( 'woocommerce_product_options_general_product_data', 'conai_fw_product_custom_fields' );
+		add_action( 'woocommerce_process_product_meta', 'conai_fw_woocommerce_product_custom_fields_save' );
+		add_filter( 'woocommerce_available_variation', 'conai_fw_custom_load_variation_settings_products_fields' );
+		add_action( 'woocommerce_cart_calculate_fees', 'conai_fw_weight_add_cart_fee' );
 	} else {
-		add_action( 'admin_notices', 'wc_conai_admin_error_notice' );
+		add_action( 'admin_notices', 'conai_fw_admin_error_notice' );
 	}
 } );
 
-function wc_conai_admin_error_notice() {
-	echo esc_html( '<div class="notice error my-acf-notice is-dismissible" ><p>' . __( 'Il plugin "Contributo Ambientale Conai for WooCommerce" per funzionare ha bisogno di WooCommerce e ACF Pro attivi', 'wc_conai' ) . '</p></div>' );
+function conai_fw_admin_error_notice() {
+	echo esc_html( '<div class="notice error my-acf-notice is-dismissible" ><p>' . __( 'Il plugin "Contributo Ambientale Conai for WooCommerce" per funzionare ha bisogno di WooCommerce e ACF Pro attivi', 'contributo-ambientale-conai-for-woocommerce' ) . '</p></div>' );
 }
 
-function wc_conai_product_custom_fields() {
-	$options = get_field( 'wc_conai_list', 'option' );
+function conai_fw_product_custom_fields() {
+	$options = get_field( 'conai_fw_list', 'option' );
 
 	$woocommerce_wp_select_options = [
-		'0' => __( 'Non soggetto a Conai', 'wc_conai' ),
+		'0' => __( 'Non soggetto a Conai', 'contributo-ambientale-conai-for-woocommerce' ),
 	];
 
 	foreach ( $options as $option ) {
-		$woocommerce_wp_select_options[ $option['id'] ] = __( 'Contributo conai ', 'wc_conai' ) . $option['nome'] . ' ' . $option['prezzo'] . '' . $option['unita_di_misura'];
+		$woocommerce_wp_select_options[ $option['id'] ] = __( 'Contributo conai ', 'contributo-ambientale-conai-for-woocommerce' ) . $option['nome'] . ' ' . $option['prezzo'] . '' . $option['unita_di_misura'];
 	}
 
 	echo '<div class="product_custom_field">';
@@ -49,7 +51,7 @@ function wc_conai_product_custom_fields() {
 	woocommerce_wp_select(
 		[
 			'id'      => 'wc_conai',
-			'label'   => __( 'Conai', 'wc_conai' ),
+			'label'   => __( 'Conai', 'contributo-ambientale-conai-for-woocommerce' ),
 			'class'   => 'select long',
 			'options' => $woocommerce_wp_select_options,
 		]
@@ -58,7 +60,7 @@ function wc_conai_product_custom_fields() {
 	echo '</div>';
 }
 
-function woocommerce_product_custom_fields_save( $post_id ) {
+function conai_fw_woocommerce_product_custom_fields_save( $post_id ) {
 	if ( ! ( isset( $_POST['wc_conai'] ) || wp_verify_nonce( sanitize_key( $_POST['woocommerce_meta_nonce'] ), 'woocommerce_save_data' ) ) ) {
         return;
     }
@@ -67,23 +69,23 @@ function woocommerce_product_custom_fields_save( $post_id ) {
 	update_post_meta( $post_id, 'wc_conai', $woocommerce_custom_product_select );
 }
 
-function custom_load_variation_settings_products_fields( $variations ) {
+function conai_fw_custom_load_variation_settings_products_fields( $variations ) {
 	$variations['wc_conai'] = get_post_meta( $variations['variation_id'], 'wc_conai', true );
 
 	return $variations;
 }
 
-function wc_conai_wc_conai_list_repeater_field() {
+function conai_fw_conai_fw_list_repeater_field() {
 	$output = [];
-	$repeater_value = get_option( 'options_wc_conai_list' );
+	$repeater_value = get_option( 'options_conai_fw_list' );
 
 	if ( $repeater_value ) {
 		for ($i=0; $i<$repeater_value; $i++) {
 			$output[] = [
-				'id' => get_option("options_wc_conai_list_{$i}_id"),
-				'nome' => get_option("options_wc_conai_list_{$i}_nome"),
-				'prezzo' => get_option("options_wc_conai_list_{$i}_prezzo"),
-				'unita_di_misura' => get_option("options_wc_conai_list_{$i}_unita_di_misura")
+				'id' => get_option("options_conai_fw_list_{$i}_id"),
+				'nome' => get_option("options_conai_fw_list_{$i}_nome"),
+				'prezzo' => get_option("options_conai_fw_list_{$i}_prezzo"),
+				'unita_di_misura' => get_option("options_conai_fw_list_{$i}_unita_di_misura")
 			];
 		} 
 	}
@@ -91,32 +93,32 @@ function wc_conai_wc_conai_list_repeater_field() {
 	return $output;
 }
 
-function wc_conai_get_all_wc_tax_classes() {
+function conai_fw_get_all_wc_tax_classes() {
 	$tax_classes = WC_Tax::get_tax_classes(); 
 
     if (! in_array( '', $tax_classes ) ) { 
-        array_unshift( $tax_classes,  __( 'Standard rate', 'wc_conai' ) );
+        array_unshift( $tax_classes,  __( 'Standard rate', 'contributo-ambientale-conai-for-woocommerce' ) );
     }
 
 	return $tax_classes;
 }
 
-function wc_conai_weight_add_cart_fee() {
+function conai_fw_weight_add_cart_fee() {
 	if ( is_admin() && ! defined( 'DOING_AJAX' ) ) {
 		return;
 	}
 
-	$options = wc_conai_wc_conai_list_repeater_field() ?: [];
+	$options = conai_fw_conai_fw_list_repeater_field() ?: [];
 	$tax_class = get_field( 'aliquota_di_imposta', 'options' ) ?: '';
 	$all_conai_id = array_column( $options, 'id' );
-	$tax_classes = wc_conai_get_all_wc_tax_classes();
+	$tax_classes = conai_fw_get_all_wc_tax_classes();
 
 	$tax_class = $tax_classes[ $tax_class ] ?? '';
 	$conai_counter_array = [];
 
 	foreach ( $options as $option ) {
 		$conai_counter_array[ $option['id'] ] = [
-			__( 'Contributo conai ', 'wc_conai' ) . $option['nome'] . ' ' . $option['prezzo'] . '' . $option['unita_di_misura'],
+			__( 'Contributo conai ', 'contributo-ambientale-conai-for-woocommerce' ) . $option['nome'] . ' ' . $option['prezzo'] . '' . $option['unita_di_misura'],
 			$option['prezzo'],
 			0,
 		];
