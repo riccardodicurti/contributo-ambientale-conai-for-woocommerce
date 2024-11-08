@@ -6,7 +6,7 @@
  * Plugin URI:        https://riccardodicurti.it/wc_conai
  * GitHub Plugin URI: riccardodicurti/wc_conai
  * Description:       Calcolo del contributo ambientale conai per WooCommerce
- * Version:           1.1.4
+ * Version:           1.1.5
  * Author:            Riccardo Di Curti
  * Author URI:        https://riccardodicurti.it/
  * License: 		  GPLv2 or later
