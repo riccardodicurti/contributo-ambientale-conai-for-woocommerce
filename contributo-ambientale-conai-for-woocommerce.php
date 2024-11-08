@@ -6,7 +6,7 @@
  * Plugin URI:        https://riccardodicurti.it/wc_conai
  * GitHub Plugin URI: riccardodicurti/wc_conai
  * Description:       Calcolo del contributo ambientale conai per WooCommerce
- * Version:           1.1.5
+ * Version:           1.1.6
  * Author:            Riccardo Di Curti
  * Author URI:        https://riccardodicurti.it/
  * License: 		  GPLv2 or later
@@ -38,7 +38,7 @@ add_action( 'init', function() {
 } );
 
 function conai_fw_admin_error_notice() {
-	echo esc_html( '<div class="notice error my-acf-notice is-dismissible" ><p>' . __( 'Il plugin "Contributo Ambientale Conai for WooCommerce" per funzionare ha bisogno di WooCommerce e ACF Pro attivi', 'contributo-ambientale-conai-for-woocommerce' ) . '</p></div>' );
+	echo esc_html( '<div class="notice error my-acf-notice is-dismissible" ><p>' . __( 'Il plugin "Contributo Ambientale Conai for WooCommerce" per funzionare ha bisogno di WooCommerce ed ACF Pro attivi', 'contributo-ambientale-conai-for-woocommerce' ) . '</p></div>' );
 }
 
 function conai_fw_product_custom_fields() {

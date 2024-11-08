@@ -33,6 +33,12 @@ This plugin is released under the terms of the GNU General Public License versio
 
 ## Changelog 
 
+**1.1.6**
+- bug fixing
+
+**1.1.5**
+- readme update
+
 **1.1.4**
 - bug fixing
 
